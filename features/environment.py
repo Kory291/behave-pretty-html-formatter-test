@@ -2,6 +2,7 @@ from behave_html_pretty_formatter import PrettyHTMLFormatter
 from behave.formatter.base import StreamOpener
 
 def before_all(context):
+    # this doesn't break anything
     if not any(isinstance(formatter, PrettyHTMLFormatter) for formatter in context._runner.formatters):
         pretty_html_formatter = PrettyHTMLFormatter(StreamOpener("first.html"), context.config)
         context._runner.formatters.append(pretty_html_formatter)
