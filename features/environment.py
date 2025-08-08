@@ -9,9 +9,10 @@ def before_all(context):
 
 def before_feature(context, feature):
     # this breaks
-    # pretty_html_formatter = PrettyHTMLFormatter(StreamOpener("second.html"), context.config)
-    # context._runner.formatters.append(pretty_html_formatter)
-    pass
+    feature_formatter = PrettyHTMLFormatter(StreamOpener("second.html"), context.config)
+    context._runner.formatters.append(feature_formatter)
+    # -- MISSING: Formatter.feature() was not called due to late registration
+    feature_formatter.feature(feature)
 
 def before_scenario(context, scenario):
     pass
@@ -20,10 +21,9 @@ def after_scenario(context, scenario):
     pass
 
 def after_feature(context, feature):
-    # pretty_html_formatter = [formatter for formatter in context._runner.formatters if isinstance(formatter, PrettyHTMLFormatter)][-1]
-    # context._runner.formatters.remove(pretty_html_formatter)
-    # pretty_html_formatter.close()
-    pass
+    feature_formatter = [formatter for formatter in context._runner.formatters if isinstance(formatter, PrettyHTMLFormatter)][-1]
+    context._runner.formatters.remove(feature_formatter)
+    feature_formatter.close()
 
 def after_all(context):
     pass
